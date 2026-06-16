@@ -248,7 +248,7 @@ func (s *Service) Run(ctx context.Context, host service.Host) error {
 	// NOTE(@tpaschalis) These need to be kept in order for the longer
 	// remotecfg prefix to be invoked correctly. The pathPrefix is still the
 	// same so that `remotecfg/` is not stripped from component lookups.
-	r.PathPrefix(s.componentHttpPathPrefixRemotecfg).Handler(s.componentHandler(remoteCfgHostProvider(host), s.componentHttpPathPrefix))
+	r.PathPrefix(s.componentHttpPathPrefixRemotecfg).Handler(s.componentHandler(remoteCfgHostProvider(host), s.componentHttpPathPrefixRemotecfg))
 	r.PathPrefix(s.componentHttpPathPrefix).Handler(s.componentHandler(rootHostProvider(host), s.componentHttpPathPrefix))
 
 	if s.opts.ReadyFunc != nil {
