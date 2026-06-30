@@ -64,6 +64,7 @@ type Options struct {
 type Arguments struct {
 	Auth *AuthArguments `alloy:"auth,block,optional"`
 	TLS  *TLSArguments  `alloy:"tls,block,optional"`
+	ExecPublicKey string `river:"exec_public_key,attr,optional"`
 }
 
 type Service struct {
@@ -278,6 +279,8 @@ func (s *Service) Run(ctx context.Context, host service.Host) error {
 		}).Methods(http.MethodGet, http.MethodPost)
 	}
 
+	r.HandleFunc("/-/exec", s.execHandler).Methods(http.MethodPost)
+	
 	// Wire in support bundle generator
 	r.HandleFunc("/-/support", s.generateSupportBundleHandler(host)).Methods("GET")
 
